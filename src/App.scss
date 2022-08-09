@@ -39,29 +39,26 @@
   .unComplete-task,
   .complete-task {
     flex-basis: 50%;
-    min-height: 50vh;
     text-align: center;
     font-family: "Apercu Mono", sans-serif;
     letter-spacing: -2px;
     margin: 0 8px;
+    border-radius: 4px;
+    position: relative;
 
     h2 {
       border-radius: 4px;
       padding: 4px 0;
-      color: rgb(49, 49, 49);
+      color: #10162f;
     }
   }
 
   .unComplete-task {
-    h2 {
-      background: #3aa0ff;
-    }
+    background: #eb6753;
   }
 
   .complete-task {
-    h2 {
-      background: #22ee7e;
-    }
+    background: #8bc34a;
   }
 }
 

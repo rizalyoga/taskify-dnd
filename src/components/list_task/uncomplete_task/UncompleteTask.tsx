@@ -13,6 +13,10 @@ interface TasksProps {
 }
 
 const UncompleteTask = ({ tasks, setTasks }: TasksProps) => {
+  if (!tasks.length) {
+    return <p className="empty__task">You don't have a task</p>;
+  }
+
   return (
     <>
       {tasks?.map((task) => (

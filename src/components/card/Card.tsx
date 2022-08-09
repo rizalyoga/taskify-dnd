@@ -42,9 +42,10 @@ const Card = ({ task, tasks, setTasks }: SingleTaskProps) => {
   // Function for Edit Task
   const editTaskHandler = (e: React.FormEvent, id: number) => {
     e.preventDefault();
+
     setTasks(
       tasks.map((prevTask) =>
-        prevTask.id === id ? { ...prevTask, task: newTask } : task
+        prevTask.id === id ? { ...prevTask, task: newTask } : prevTask
       )
     );
     setEdit((prevValue) => !prevValue);
