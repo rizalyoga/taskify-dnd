@@ -6,6 +6,7 @@ import Card from "../../card/Card";
 
 // Type || Interface
 import { Tasks } from "../../../types/taskType";
+import { Droppable } from "react-beautiful-dnd";
 
 interface TasksProps {
   tasks: Tasks[];
@@ -18,11 +19,26 @@ const UncompleteTask = ({ tasks, setTasks }: TasksProps) => {
   }
 
   return (
-    <>
-      {tasks?.map((task) => (
-        <Card key={task.id} task={task} tasks={tasks} setTasks={setTasks} />
-      ))}
-    </>
+    <Droppable droppableId="uncomplete-task">
+      {(provided) => (
+        <div
+          className="list__item-container"
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          {tasks?.map((task, idx) => (
+            <Card
+              key={task.id}
+              task={task}
+              tasks={tasks}
+              setTasks={setTasks}
+              index={idx}
+            />
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 };
 
