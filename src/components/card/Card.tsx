@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Draggable } from "react-beautiful-dnd";
 import "./Card.scss";
 
 // Icon
@@ -11,9 +12,10 @@ type SingleTaskProps = {
   task: Tasks;
   tasks: Tasks[];
   setTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
+  index: number;
 };
 
-const Card = ({ task, tasks, setTasks }: SingleTaskProps) => {
+const Card = ({ task, tasks, setTasks, index }: SingleTaskProps) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [newTask, setNewTask] = useState<string>(task.task);
 
@@ -52,39 +54,50 @@ const Card = ({ task, tasks, setTasks }: SingleTaskProps) => {
   };
 
   return (
-    <form
-      className="card__container"
-      onSubmit={(e) => editTaskHandler(e, task.id)}
-    >
-      {edit ? (
-        <input
-          className="card__edit-input"
-          type="text"
-          required
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-          ref={inputRef}
-        />
-      ) : (
-        <span
-          className="card__task-desc"
-          style={task.isDone ? { color: "red" } : { color: "white" }}
-        >
-          {task.task}
-        </span>
-      )}
-      <div className="card__actions">
-        <span className="card__action-icon">
-          <FcEditImage onClick={() => setEdit((prevValue) => !prevValue)} />
-        </span>
-        <span className="card__action-icon">
-          <FcFullTrash onClick={() => deleteTaskHandler(task.id)} />
-        </span>
-        <span className="card__action-icon">
-          <FcApproval onClick={() => approveTaskHandler(task.id)} />
-        </span>
-      </div>
-    </form>
+    <>
+      <Draggable draggableId={task.id.toString()} index={index}>
+        {(provided) => (
+          <form
+            className="card__container"
+            onSubmit={(e) => editTaskHandler(e, task.id)}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
+            {edit && !task.isDone ? (
+              <input
+                className="card__edit-input"
+                type="text"
+                required
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                ref={inputRef}
+              />
+            ) : (
+              <span
+                className="card__task-desc"
+                style={task.isDone ? { color: "red" } : { color: "white" }}
+              >
+                {task.task}
+              </span>
+            )}
+            <div className="card__actions">
+              <span className="card__action-icon">
+                <FcEditImage
+                  onClick={() => setEdit((prevValue) => !prevValue)}
+                />
+              </span>
+              <span className="card__action-icon">
+                <FcFullTrash onClick={() => deleteTaskHandler(task.id)} />
+              </span>
+              <span className="card__action-icon">
+                <FcApproval onClick={() => approveTaskHandler(task.id)} />
+              </span>
+            </div>
+          </form>
+        )}
+      </Draggable>
+    </>
   );
 };
 
