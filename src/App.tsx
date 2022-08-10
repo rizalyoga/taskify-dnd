@@ -4,8 +4,7 @@ import "./App.scss";
 
 // Components
 import TaskInputfield from "./components/form_create_task/TaskInputfield";
-import UncompleteTask from "./components/list_task/uncomplete_task/UncompleteTask";
-import CompleteTask from "./components/list_task/complete_task/CompleteTask";
+import ListTask from "./components/list_task/ListTask";
 
 // type | interface
 import { Tasks } from "./types/taskType";
@@ -31,8 +30,6 @@ const App = () => {
   };
 
   const onDragEnd = (result: DropResult) => {
-    console.log(result);
-
     const { source, destination } = result;
 
     if (!destination) return;
@@ -47,7 +44,7 @@ const App = () => {
     let uncomplete = tasks;
     let complete = completeTasks;
 
-    if (source.droppableId === "uncomplete-task") {
+    if (source.droppableId === "uncomplete-tasks") {
       add = uncomplete[source.index];
       uncomplete.splice(source.index, 1);
     } else {
@@ -55,7 +52,7 @@ const App = () => {
       complete.splice(source.index, 1);
     }
 
-    if (destination.droppableId === "uncomplete-task") {
+    if (destination.droppableId === "uncomplete-tasks") {
       uncomplete.splice(destination.index, 0, add);
     } else {
       complete.splice(destination.index, 0, add);
@@ -77,19 +74,13 @@ const App = () => {
             setTask={setTask}
             createTask={createTask}
           />
-          <div className="content-container">
-            <div className="unComplete-task">
-              <h2>Uncomplete Task</h2>
-              <UncompleteTask tasks={tasks} setTasks={setTasks} />
-            </div>
-            <div className="complete-task">
-              <h2>Complete Task</h2>
-              <CompleteTask
-                completeTasks={completeTasks}
-                setCompleteTasks={setCompleteTasks}
-              />
-            </div>
-          </div>
+
+          <ListTask
+            tasks={tasks}
+            setTasks={setTasks}
+            completeTasks={completeTasks}
+            setCompleteTasks={setCompleteTasks}
+          />
         </div>
       </div>
     </DragDropContext>

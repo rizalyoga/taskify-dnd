@@ -31,39 +31,3 @@
     text-shadow: 2px 2px #ffd300;
   }
 }
-
-.content-container {
-  display: flex;
-  gap: 10px;
-
-  .unComplete-task,
-  .complete-task {
-    flex-basis: 50%;
-    text-align: center;
-    font-family: "Apercu Mono", sans-serif;
-    letter-spacing: -2px;
-    margin: 0 8px;
-    border-radius: 4px;
-    position: relative;
-
-    h2 {
-      border-radius: 4px;
-      padding: 4px 0;
-      color: #10162f;
-    }
-  }
-
-  .unComplete-task {
-    background: #eb6753;
-  }
-
-  .complete-task {
-    background: #8bc34a;
-  }
-}
-
-@media (max-width: 600px) {
-  .content-container {
-    flex-direction: column;
-  }
-}

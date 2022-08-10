@@ -64,7 +64,7 @@ const Card = ({ task, tasks, setTasks, index }: SingleTaskProps) => {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            {edit ? (
+            {edit && !task.isDone ? (
               <input
                 className="card__edit-input"
                 type="text"
