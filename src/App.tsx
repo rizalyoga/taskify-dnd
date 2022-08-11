@@ -30,7 +30,7 @@ const App = () => {
   };
 
   const onDragEnd = (result: DropResult) => {
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
 
     if (!destination) return;
 
@@ -58,8 +58,16 @@ const App = () => {
       complete.splice(destination.index, 0, add);
     }
 
-    setTasks(uncomplete);
-    setCompleteTasks(complete);
+    setTasks(
+      uncomplete.map((el) =>
+        el.id === Number(draggableId) ? { ...el, isDone: false } : el
+      )
+    );
+    setCompleteTasks(
+      complete.map((el) =>
+        el.id === Number(draggableId) ? { ...el, isDone: true } : el
+      )
+    );
   };
 
   return (

@@ -38,6 +38,8 @@ const ListTask = ({
                 index={idx}
                 tasks={tasks}
                 task={task}
+                setCompleteTasks={setCompleteTasks}
+                completeTasks={completeTasks}
               />
             ))}
           </div>
@@ -55,9 +57,11 @@ const ListTask = ({
               <Card
                 key={task.id}
                 task={task}
-                tasks={completeTasks}
-                setTasks={setCompleteTasks}
+                tasks={tasks}
+                setTasks={setTasks}
                 index={idx}
+                completeTasks={completeTasks}
+                setCompleteTasks={setCompleteTasks}
               />
             ))}
           </div>

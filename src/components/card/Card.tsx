@@ -11,11 +11,20 @@ import { Tasks } from "../../types/taskType";
 type SingleTaskProps = {
   task: Tasks;
   tasks: Tasks[];
+  completeTasks: Tasks[];
   setTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
+  setCompleteTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
   index: number;
 };
 
-const Card = ({ task, tasks, setTasks, index }: SingleTaskProps) => {
+const Card = ({
+  task,
+  tasks,
+  setTasks,
+  index,
+  setCompleteTasks,
+  completeTasks,
+}: SingleTaskProps) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [newTask, setNewTask] = useState<string>(task.task);
 
@@ -28,12 +37,37 @@ const Card = ({ task, tasks, setTasks, index }: SingleTaskProps) => {
   }, [edit]);
 
   // Function for approve done task
-  const approveTaskHandler = (id: number) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, isDone: !task.isDone } : task
-      )
-    );
+  const approveTaskHandler = (id: number, isDone: boolean) => {
+    if (!isDone) {
+      const selectedTask = tasks.filter((task) => task.id === id);
+      const arr = tasks.filter((el) => el.id !== id);
+      setTasks(arr);
+
+      const newArrCompleteTasks = [...completeTasks, ...selectedTask];
+      setCompleteTasks(
+        newArrCompleteTasks.map((task) =>
+          task.id === id ? { ...task, isDone: !task.isDone } : task
+        )
+      );
+    } else {
+      const selectedTask = completeTasks.filter((task) => task.id === id);
+      const arr = completeTasks.filter((el) => el.id !== id);
+      setCompleteTasks(arr);
+
+      const newArrCompleteTasks = [...tasks, ...selectedTask];
+
+      setTasks(
+        newArrCompleteTasks.map((task) =>
+          task.id === id ? { ...task, isDone: !task.isDone } : task
+        )
+      );
+    }
+
+    // setTasks(
+    // tasks.map((task) =>
+    // task.id === id ? { ...task, isDone: !task.isDone } : task
+    // )
+    // );
   };
 
   // Function for Delete Task
@@ -50,6 +84,7 @@ const Card = ({ task, tasks, setTasks, index }: SingleTaskProps) => {
         prevTask.id === id ? { ...prevTask, task: newTask } : prevTask
       )
     );
+
     setEdit((prevValue) => !prevValue);
   };
 
@@ -76,7 +111,7 @@ const Card = ({ task, tasks, setTasks, index }: SingleTaskProps) => {
             ) : (
               <span
                 className="card__task-desc"
-                style={task.isDone ? { color: "red" } : { color: "white" }}
+                style={task.isDone ? { color: "green" } : { color: "white" }}
               >
                 {task.task}
               </span>
@@ -91,7 +126,9 @@ const Card = ({ task, tasks, setTasks, index }: SingleTaskProps) => {
                 <FcFullTrash onClick={() => deleteTaskHandler(task.id)} />
               </span>
               <span className="card__action-icon">
-                <FcApproval onClick={() => approveTaskHandler(task.id)} />
+                <FcApproval
+                  onClick={() => approveTaskHandler(task.id, task.isDone)}
+                />
               </span>
             </div>
           </form>
