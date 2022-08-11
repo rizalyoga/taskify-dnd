@@ -11,7 +11,7 @@
     margin: 0 8px;
     border-radius: 4px;
     position: relative;
-    background: #eb6753;
+    transition: all 0.2s;
 
     h2 {
       color: #10162f;
@@ -23,7 +23,7 @@
     background: #eb6753;
   }
 
-  .list__uncomplete-task {
+  .list__complete-task {
     background: #8bc34a;
   }
 }

@@ -26,7 +26,7 @@ const ListTask = ({
       <Droppable droppableId="uncomplete-tasks">
         {(provided) => (
           <div
-            className="list__complete-task"
+            className="list__uncomplete-task"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -38,6 +38,8 @@ const ListTask = ({
                 index={idx}
                 tasks={tasks}
                 task={task}
+                setCompleteTasks={setCompleteTasks}
+                completeTasks={completeTasks}
               />
             ))}
           </div>
@@ -46,7 +48,7 @@ const ListTask = ({
       <Droppable droppableId="complete-tasks">
         {(provided) => (
           <div
-            className="list__uncomplete-task "
+            className="list__complete-task "
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -55,9 +57,11 @@ const ListTask = ({
               <Card
                 key={task.id}
                 task={task}
-                tasks={completeTasks}
-                setTasks={setCompleteTasks}
+                tasks={tasks}
+                setTasks={setTasks}
                 index={idx}
+                completeTasks={completeTasks}
+                setCompleteTasks={setCompleteTasks}
               />
             ))}
           </div>
