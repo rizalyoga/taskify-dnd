@@ -26,7 +26,7 @@ const ListTask = ({
       <Droppable droppableId="uncomplete-tasks">
         {(provided) => (
           <div
-            className="list__complete-task"
+            className="list__uncomplete-task"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -48,7 +48,7 @@ const ListTask = ({
       <Droppable droppableId="complete-tasks">
         {(provided) => (
           <div
-            className="list__uncomplete-task "
+            className="list__complete-task "
             ref={provided.innerRef}
             {...provided.droppableProps}
           >

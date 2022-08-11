@@ -40,10 +40,11 @@ const Card = ({
   const approveTaskHandler = (id: number, isDone: boolean) => {
     if (!isDone) {
       const selectedTask = tasks.filter((task) => task.id === id);
-      const arr = tasks.filter((el) => el.id !== id);
-      setTasks(arr);
+
+      setTasks(tasks.filter((el) => el.id !== id));
 
       const newArrCompleteTasks = [...completeTasks, ...selectedTask];
+
       setCompleteTasks(
         newArrCompleteTasks.map((task) =>
           task.id === id ? { ...task, isDone: !task.isDone } : task
@@ -51,8 +52,8 @@ const Card = ({
       );
     } else {
       const selectedTask = completeTasks.filter((task) => task.id === id);
-      const arr = completeTasks.filter((el) => el.id !== id);
-      setCompleteTasks(arr);
+
+      setCompleteTasks(completeTasks.filter((el) => el.id !== id));
 
       const newArrCompleteTasks = [...tasks, ...selectedTask];
 
@@ -62,17 +63,15 @@ const Card = ({
         )
       );
     }
-
-    // setTasks(
-    // tasks.map((task) =>
-    // task.id === id ? { ...task, isDone: !task.isDone } : task
-    // )
-    // );
   };
 
   // Function for Delete Task
-  const deleteTaskHandler = (id: number) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+  const deleteTaskHandler = (id: number, isDone: boolean) => {
+    if (!isDone) {
+      setTasks(tasks.filter((task) => task.id !== id));
+    } else {
+      setCompleteTasks(completeTasks.filter((task) => task.id !== id));
+    }
   };
 
   // Function for Edit Task
@@ -123,7 +122,9 @@ const Card = ({
                 />
               </span>
               <span className="card__action-icon">
-                <FcFullTrash onClick={() => deleteTaskHandler(task.id)} />
+                <FcFullTrash
+                  onClick={() => deleteTaskHandler(task.id, task.isDone)}
+                />
               </span>
               <span className="card__action-icon">
                 <FcApproval
