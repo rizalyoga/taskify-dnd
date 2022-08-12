@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import "./Card.scss";
 
@@ -7,28 +7,20 @@ import { FcFullTrash, FcEditImage, FcApproval } from "react-icons/fc";
 
 // Type | Interface
 import { Tasks } from "../../types/taskType";
+import { AllTasks } from "../../App";
 
 type SingleTaskProps = {
   task: Tasks;
-  tasks: Tasks[];
-  completeTasks: Tasks[];
-  setTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
-  setCompleteTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
   index: number;
 };
 
-const Card = ({
-  task,
-  tasks,
-  setTasks,
-  index,
-  setCompleteTasks,
-  completeTasks,
-}: SingleTaskProps) => {
+const Card = ({ task, index }: SingleTaskProps) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [newTask, setNewTask] = useState<string>(task.task);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const context = useContext(AllTasks);
 
   useEffect(() => {
     if (edit) {
@@ -39,25 +31,32 @@ const Card = ({
   // Function for approve done task
   const approveTaskHandler = (id: number, isDone: boolean) => {
     if (!isDone) {
-      const selectedTask = tasks.filter((task) => task.id === id);
+      const selectedTask = context?.tasks.filter((task) => task.id === id);
 
-      setTasks(tasks.filter((el) => el.id !== id));
+      context?.setTasks(context?.tasks.filter((el) => el.id !== id));
 
-      const newArrCompleteTasks = [...completeTasks, ...selectedTask];
+      const newArrCompleteTasks = [
+        ...context?.completeTasks!,
+        ...selectedTask!,
+      ];
 
-      setCompleteTasks(
+      context?.setCompleteTasks(
         newArrCompleteTasks.map((task) =>
           task.id === id ? { ...task, isDone: !task.isDone } : task
         )
       );
     } else {
-      const selectedTask = completeTasks.filter((task) => task.id === id);
+      const selectedTask = context?.completeTasks.filter(
+        (task) => task.id === id
+      );
 
-      setCompleteTasks(completeTasks.filter((el) => el.id !== id));
+      context?.setCompleteTasks(
+        context.completeTasks.filter((el) => el.id !== id)
+      );
 
-      const newArrCompleteTasks = [...tasks, ...selectedTask];
+      const newArrCompleteTasks = [...context?.tasks!, ...selectedTask!];
 
-      setTasks(
+      context?.setTasks(
         newArrCompleteTasks.map((task) =>
           task.id === id ? { ...task, isDone: !task.isDone } : task
         )
@@ -68,9 +67,11 @@ const Card = ({
   // Function for Delete Task
   const deleteTaskHandler = (id: number, isDone: boolean) => {
     if (!isDone) {
-      setTasks(tasks.filter((task) => task.id !== id));
+      context?.setTasks(context.tasks.filter((task) => task.id !== id));
     } else {
-      setCompleteTasks(completeTasks.filter((task) => task.id !== id));
+      context?.setCompleteTasks(
+        context.completeTasks.filter((task) => task.id !== id)
+      );
     }
   };
 
@@ -78,8 +79,8 @@ const Card = ({
   const editTaskHandler = (e: React.FormEvent, id: number) => {
     e.preventDefault();
 
-    setTasks(
-      tasks.map((prevTask) =>
+    context?.setTasks(
+      context.tasks.map((prevTask) =>
         prevTask.id === id ? { ...prevTask, task: newTask } : prevTask
       )
     );

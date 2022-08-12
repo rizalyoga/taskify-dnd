@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import "./App.scss";
 
@@ -7,7 +7,11 @@ import TaskInputfield from "./components/form_create_task/TaskInputfield";
 import ListTask from "./components/list_task/ListTask";
 
 // type | interface
-import { Tasks } from "./types/taskType";
+import { Tasks, AllListTasksContext } from "./types/taskType";
+
+export const AllTasks = createContext<AllListTasksContext | undefined>(
+  undefined
+);
 
 const App = () => {
   const [task, setTask] = useState<string>("");
@@ -71,27 +75,26 @@ const App = () => {
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="app-container">
-        <div className="inner-wrapper">
-          <div className="header">
-            <h1>~Taskify~</h1>
-          </div>
-          <TaskInputfield
-            task={task}
-            setTask={setTask}
-            createTask={createTask}
-          />
+    <AllTasks.Provider
+      value={{ tasks, setTasks, completeTasks, setCompleteTasks }}
+    >
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="app-container">
+          <div className="inner-wrapper">
+            <div className="header">
+              <h1>~Taskify~</h1>
+            </div>
+            <TaskInputfield
+              task={task}
+              setTask={setTask}
+              createTask={createTask}
+            />
 
-          <ListTask
-            tasks={tasks}
-            setTasks={setTasks}
-            completeTasks={completeTasks}
-            setCompleteTasks={setCompleteTasks}
-          />
+            <ListTask />
+          </div>
         </div>
-      </div>
-    </DragDropContext>
+      </DragDropContext>
+    </AllTasks.Provider>
   );
 };
 

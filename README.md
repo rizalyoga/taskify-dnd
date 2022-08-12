@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+<div align="center">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!-- PROJECT LOGO -->
 
-## Available Scripts
+<img src="public/logo-task.png" alt="Logo" width="250" height="auto" />
 
-In the project directory, you can run:
+</div>
 
-### `yarn start`
+# Taskify DnD
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<table>
+ <tr>
+  <td>
+   Taskify DnD is a simple to do list application made using react beautiful dnd and typescript.
+  </td>
+ </tr>
+</table>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Site
 
-### `yarn test`
+<video width="90%" autoplay>
+   <source src="" type="video/mp4">
+</video>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Run in locale
 
-### `yarn build`
+To clone and run this website, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [yarn](https://yarnpkg.com/)) installed on your computer. From your command line:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# Clone this repository
+$ git clone https://github.com/rizalyoga/taskify-dnd.git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Go into the repository
+$ cd taskify-dnd
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Install dependencies
+$ yarn
 
-### `yarn eject`
+# Run the app
+$ yarn run start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Built with
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [React JS](https://reactjs.org/) - React is a free and open-source front-end JavaScript library for building user interfaces based on UI components. It is maintained by Meta and a community of individual developers and companies..
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) - Beautiful and accessible drag and drop for lists with React.

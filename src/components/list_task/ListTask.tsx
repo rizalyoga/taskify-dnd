@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ListTask.scss";
 import { Droppable } from "react-beautiful-dnd";
 
@@ -6,21 +6,11 @@ import { Droppable } from "react-beautiful-dnd";
 import Card from "../card/Card";
 
 // Type | Interface
-import { Tasks } from "../../types/taskType";
+import { AllTasks } from "../../App";
 
-interface ListProps {
-  tasks: Tasks[];
-  setTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
-  completeTasks: Tasks[];
-  setCompleteTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
-}
+const ListTask = () => {
+  const context = useContext(AllTasks);
 
-const ListTask = ({
-  tasks,
-  setTasks,
-  completeTasks,
-  setCompleteTasks,
-}: ListProps) => {
   return (
     <div className="list__container">
       <Droppable droppableId="uncomplete-tasks">
@@ -31,16 +21,8 @@ const ListTask = ({
             {...provided.droppableProps}
           >
             <h2>Uncomplete task</h2>
-            {tasks?.map((task, idx) => (
-              <Card
-                key={task.id}
-                setTasks={setTasks}
-                index={idx}
-                tasks={tasks}
-                task={task}
-                setCompleteTasks={setCompleteTasks}
-                completeTasks={completeTasks}
-              />
+            {context?.tasks?.map((task, idx) => (
+              <Card key={task.id} index={idx} task={task} />
             ))}
           </div>
         )}
@@ -53,16 +35,8 @@ const ListTask = ({
             {...provided.droppableProps}
           >
             <h2>Complete task</h2>
-            {completeTasks?.map((task, idx) => (
-              <Card
-                key={task.id}
-                task={task}
-                tasks={tasks}
-                setTasks={setTasks}
-                index={idx}
-                completeTasks={completeTasks}
-                setCompleteTasks={setCompleteTasks}
-              />
+            {context?.completeTasks.map((task, idx) => (
+              <Card key={task.id} task={task} index={idx} />
             ))}
           </div>
         )}
